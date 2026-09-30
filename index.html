@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cave Together Soon</title>
+  <style>
+    :root {
+      --bg: #171411;
+      --panel: #211c18;
+      --cream: #f6eadc;
+      --muted: #bcae9e;
+      --pink: #e89a93;
+      --pink-soft: #f6c5bf;
+      --track: #3a302a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(232,154,147,.08), transparent 32%),
+        linear-gradient(180deg, #171411 0%, #120f0d 100%);
+      color: var(--cream);
+      display: flex;
+      justify-content: center;
+      padding: 34px 18px 44px;
+    }
+
+    .page {
+      width: min(1100px, 100%);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      color: var(--cream);
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    .brand {
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+    }
+
+    .paw {
+      color: var(--pink);
+      margin-left: 6px;
+    }
+
+    .date {
+      color: var(--muted);
+      font-size: .95rem;
+      font-weight: 500;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .photo-wrap {
+      background: #efe1d2;
+      padding: 14px 14px 48px;
+      border-radius: 18px;
+      transform: rotate(-1.5deg);
+      box-shadow: 0 18px 45px rgba(0,0,0,.28);
+      position: relative;
+    }
+
+    .photo-wrap img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .photo-note {
+      position: absolute;
+      right: 22px;
+      bottom: 14px;
+      color: #4c3b35;
+      font-family: "Segoe Print", "Comic Sans MS", cursive;
+      font-size: .95rem;
+      transform: rotate(-2deg);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 5.5vw, 5.2rem);
+      line-height: .98;
+      letter-spacing: -.04em;
+      font-weight: 800;
+    }
+
+    .days-inline {
+      color: var(--pink-soft);
+    }
+
+    .subtitle {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .unit {
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(246,234,220,.13);
+      border-radius: 15px;
+      padding: 17px 10px 14px;
+      text-align: center;
+    }
+
+    .num {
+      display: block;
+      font-size: clamp(1.7rem, 4vw, 2.7rem);
+      color: var(--pink-soft);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .label {
+      display: block;
+      margin-top: 8px;
+      font-size: .72rem;
+      letter-spacing: .13em;
+      color: var(--muted);
+    }
+
+    .journey {
+      margin-top: 58px;
+      background: var(--panel);
+      border: 1px solid rgba(246,234,220,.08);
+      border-radius: 22px;
+      padding: 28px 24px 24px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.02);
+    }
+
+    .journey-title {
+      margin: 0 0 22px;
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .scene {
+      position: relative;
+      height: 115px;
+      display: flex;
+      align-items: center;
+    }
+
+    .track {
+      position: absolute;
+      left: 5%;
+      right: 7%;
+      top: 62px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--track);
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 20%;
+      background: linear-gradient(90deg, var(--pink), var(--pink-soft));
+      border-radius: inherit;
+      transition: width .8s ease;
+    }
+
+    .cat {
+      position: absolute;
+      top: 14px;
+      left: calc(5% + (var(--progress, 20) * .81%));
+      transform: translateX(-50%) scaleX(-1);
+      font-size: 3.1rem;
+      filter: grayscale(1) brightness(.6);
+      transition: left .8s ease;
+      z-index: 2;
+    }
+
+    .helmet {
+      position: absolute;
+      top: 3px;
+      left: calc(5% + (var(--progress, 20) * .81%));
+      transform: translateX(-45%);
+      font-size: 1.35rem;
+      z-index: 3;
+      transition: left .8s ease;
+    }
+
+    .pawprints {
+      position: absolute;
+      left: 7%;
+      right: 15%;
+      top: 74px;
+      display: flex;
+      justify-content: space-between;
+      color: #7d6e64;
+      font-size: .9rem;
+      letter-spacing: 8px;
+      opacity: .8;
+      pointer-events: none;
+    }
+
+    .people {
+      position: absolute;
+      right: 0;
+      top: 6px;
+      width: 115px;
+      text-align: center;
+      font-size: 3rem;
+      line-height: 1;
+    }
+
+    .arms {
+      font-size: 1.45rem;
+      margin-bottom: -4px;
+      color: var(--pink-soft);
+    }
+
+    .tiny-note {
+      text-align: center;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .tiny-note span { color: var(--pink-soft); }
+
+    @media (max-width: 800px) {
+      body { padding-top: 22px; }
+      .hero { grid-template-columns: 1fr; gap: 34px; }
+      .photo-wrap { max-width: 560px; margin: 0 auto; }
+      .copy { text-align: center; }
+      .countdown { gap: 8px; }
+      .unit { padding-inline: 6px; }
+      .journey { margin-top: 38px; padding-inline: 14px; }
+      .people { right: -6px; transform: scale(.88); transform-origin: bottom right; }
+      .cat { font-size: 2.7rem; }
+      .helmet { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">Cave Together Soon <span class="paw">♥</span></div>
+      <div class="date">20 January 2027</div>
+    </header>
+
+    <section class="hero">
+      <div class="photo-wrap">
+        <img src="cave-photo.png" alt="Us caving together" />
+        <div class="photo-note">same caves, soon again ♡</div>
+      </div>
+
+      <div class="copy">
+        <h1><span id="headlineDays" class="days-inline">112</span> days until you’re back and we can cave together ♡</h1>
+        <p class="subtitle">Counting down to our next cave adventure.</p>
+
+        <div class="countdown" aria-label="Countdown timer">
+          <div class="unit"><span class="num" id="days">112</span><span class="label">DAYS</span></div>
+          <div class="unit"><span class="num" id="hours">00</span><span class="label">HOURS</span></div>
+          <div class="unit"><span class="num" id="minutes">00</span><span class="label">MINUTES</span></div>
+          <div class="unit"><span class="num" id="seconds">00</span><span class="label">SECONDS</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="journey">
+      <p class="journey-title"> Lylian is on the way 🐾</p>
+      <div class="scene" id="scene">
+        <div class="track"><div class="progress" id="progress"></div></div>
+        <div class="pawprints">• • • • • • • • • • • •</div>
+
+        <div class="helmet" id="helmet">⛑️</div>
+        <div class="cat" id="cat">🐈</div>
+
+        <div class="people" aria-label="Two cavers waiting with open arms">
+          <div class="arms">♡ &nbsp; ♡</div>
+          <div>👫🏻</div>
+        </div>
+      </div>
+      <p class="tiny-note"><span id="percentText">20%</span> of the wait is already behind us.</p>
+    </section>
+  </main>
+
+  <script>
+    // Return date: 20 January 2027, midnight in the viewer's local time.
+    const returnDate = new Date(2027, 0, 20, 0, 0, 0);
+
+    // The countdown began on 3 September 2026 with 140 days remaining.
+    const countdownStart = new Date(2026, 8, 3, 0, 0, 0);
+
+    function updateCountdown() {
+      const now = new Date();
+      let diff = returnDate - now;
+
+      if (diff <= 0) {
+        document.getElementById('headlineDays').textContent = '0';
+        document.getElementById('days').textContent = '0';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        document.querySelector('h1').innerHTML = 'You’re back — time to cave together ♡';
+        setProgress(100);
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      document.getElementById('headlineDays').textContent = days;
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+      const totalJourney = returnDate - countdownStart;
+      const completed = now - countdownStart;
+      const progress = Math.max(0, Math.min(100, (completed / totalJourney) * 100));
+      setProgress(progress);
+    }
+
+    function setProgress(value) {
+      const rounded = Math.round(value);
+      document.getElementById('progress').style.width = value + '%';
+      document.getElementById('scene').style.setProperty('--progress', value);
+      document.getElementById('percentText').textContent = rounded + '%';
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
